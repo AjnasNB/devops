@@ -2,7 +2,9 @@ name: Azure CI/CD – ACR to VM
 
 on:
   push:
-    branches: ["master"]
+    branches:
+      - master
+      - main
 
 jobs:
   build-push-deploy:
@@ -26,7 +28,8 @@ jobs:
       - name: Login to Azure Container Registry
         run: |
           echo "${{ secrets.ACR_PASSWORD }}" | docker login acedevopsdemoacr.azurecr.io \
-          -u ${{ secrets.ACR_USERNAME }} --password-stdin
+            --username "${{ secrets.ACR_USERNAME }}" \
+            --password-stdin
 
       - name: Build Docker image
         run: |
